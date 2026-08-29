@@ -88,7 +88,12 @@ func main() {
 func runWatch(path string, width int, color, ascii bool) error {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
-	height := max(1, envInt("LINES", 24)-1)
+	terminalRows := envInt("LINES", 24)
+	if _, rows, err := terminal.Size(os.Stdout); err == nil && rows > 0 {
+		terminalRows = rows
+	}
+	// Reserve one status line and two blank lines below the document.
+	height := max(1, terminalRows-3)
 	restore, err := terminal.MakeRaw(os.Stdin)
 	if err != nil {
 		return fmt.Errorf("enable interactive input: %w", err)

@@ -8,6 +8,18 @@ import (
 	"unsafe"
 )
 
+type windowSize struct {
+	Rows, Cols, Xpixel, Ypixel uint16
+}
+
+func Size(file *os.File) (cols, rows int, err error) {
+	var size windowSize
+	if _, _, errno := syscall.Syscall(syscall.SYS_IOCTL, file.Fd(), syscall.TIOCGWINSZ, uintptr(unsafe.Pointer(&size))); errno != 0 {
+		return 0, 0, errno
+	}
+	return int(size.Cols), int(size.Rows), nil
+}
+
 func MakeRaw(file *os.File) (func(), error) {
 	fd := file.Fd()
 	var old syscall.Termios
