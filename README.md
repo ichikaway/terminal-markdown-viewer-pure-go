@@ -1,20 +1,11 @@
 # md-viewer
 
-Go標準ライブラリだけで実装した、コンソール用Markdownビューアーです。MarkdownをANSIカラーと罫線で読みやすく整形し、対話端末では `less` を使って閲覧できます。
+Go標準ライブラリだけで実装した、コンソール用Markdownビューアーです。MarkdownをANSIカラーと罫線で読みやすく整形し、ターミナルでは `less` を使って閲覧できます。  
+watchオプションをつけるとファイル変更をすぐに表示に反映します。  
 
-A console-based Markdown viewer implemented using only the Go standard library. It renders Markdown with ANSI colors and table borders for improved readability, and uses `less` for navigation in interactive terminals.
+A console-based Markdown viewer implemented using only the Go standard library. It renders Markdown with ANSI colors and table borders for improved readability, and uses `less` for navigation in interactive terminals.  
+Using the `watch` option immediately reflects file changes in the display.
 
-## 特徴
-
-- ファイルと標準入力に対応
-- 見出し、リスト、引用、コード、テーブルをANSI装飾付きで表示
-- 日本語などの全角文字を考慮した折り返しと列揃え
-- テーブルの左寄せ、中央寄せ、右寄せ
-- Unicode罫線とASCII罫線を選択可能
-- `NO_COLOR` に対応
-- Goモジュールとしての外部依存なし
-- 対話端末では `less` と同じ操作でスクロール・検索
-- Markdown内の端末制御文字を可視化し、ANSI/OSC注入を防止
 
 ## 必要環境
 
@@ -35,13 +26,15 @@ A console-based Markdown viewer implemented using only the Go standard library. 
 ダウンロード後、実行権限を付与して利用します。
 
 ```bash
-chmod +x mdv-macos-arm64
-./mdv-macos-arm64 README.md
+mv mdv-macos-arm64 mdv
+chmod +x mdv
+./mdv README.md
 ```
 
 Linuxの場合は、ファイル名を `mdv-linux-x86_64` に読み替えてください。各Releaseにはダウンロード内容を確認するための `checksums.txt` も添付されます。
 
 ## ビルド
+バイナリをダウンロードせずに自身でビルドする場合
 
 ```bash
 go build -o mdv .
@@ -67,7 +60,7 @@ Markdownファイルを開く:
 cat README.md | ./mdv
 ```
 
-サンプル文書を表示する:
+golangのコンパイラを使って動作させ、サンプル文書を表示する:
 
 ```bash
 go run . sample.md
