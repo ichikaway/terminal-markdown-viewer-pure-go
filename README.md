@@ -158,6 +158,23 @@ go test ./...
 go vet ./...
 ```
 
+## リリース
+
+`v` で始まるタグをGitHubへpushすると、GitHub Actionsがテストとクロスビルドを実行し、自動生成したGitHub Releaseへバイナリを添付します。
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+公開されるファイル:
+
+- `mdv-macos-arm64`: Apple Silicon搭載Mac向け
+- `mdv-linux-x86_64`: Linux x86_64向け
+- `checksums.txt`: SHA-256チェックサム
+
+Releaseはリポジトリの「Releases」ページからダウンロードできます。ワークフローは [`.github/workflows/release.yml`](.github/workflows/release.yml) にあります。
+
 実装計画と設計上の判断は [plan.md](plan.md) を参照してください。
 
 ## ライセンス
