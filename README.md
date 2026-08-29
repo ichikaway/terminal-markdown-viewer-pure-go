@@ -2,6 +2,8 @@
 
 Go標準ライブラリだけで実装した、コンソール用Markdownビューアーです。MarkdownをANSIカラーと罫線で読みやすく整形し、対話端末では `less` を使って閲覧できます。
 
+A console-based Markdown viewer implemented using only the Go standard library. It renders Markdown with ANSI colors and table borders for improved readability, and uses `less` for navigation in interactive terminals.
+
 ## 特徴
 
 - ファイルと標準入力に対応
