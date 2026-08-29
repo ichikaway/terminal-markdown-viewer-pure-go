@@ -9,7 +9,7 @@
 
 [Go公式サイト](https://go.dev/) へのリンクと、![端末の画像](terminal.png) の代替テキスト表示も確認します。
 
-[Miss Go公式サイト] (https://go.dev/) リンクのフォーマットミス
+[Miss2 Go公式サイト] (https://go.dev/) リンクのフォーマットミス
 
 ### レベル3の見出し
 

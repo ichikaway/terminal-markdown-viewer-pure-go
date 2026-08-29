@@ -65,6 +65,8 @@ Usage: mdv [options] [file]
         print all output without paging
   -width int
         display width (default: COLUMNS or 80)
+  -watch
+        watch file and refresh when it changes
 ```
 
 使用例:
@@ -78,6 +80,9 @@ Usage: mdv [options] [file]
 
 # ASCII文字だけで罫線を描画
 ./mdv -ascii sample.md
+
+# ファイルの変更を監視して自動更新
+./mdv -watch README.md
 ```
 
 `NO_COLOR` 環境変数が設定されている場合と、出力先が端末でない場合は、ANSIカラーを自動的に無効化します。表示幅は `-width`、`COLUMNS`、既定値80の順で決定します。
@@ -96,6 +101,18 @@ Usage: mdv [options] [file]
 | `q` | 終了 |
 
 ページャーを使わず、そのまま出力する場合は `-no-pager` を指定してください。
+
+## ファイル監視
+
+`-watch` を指定すると、ファイルの内容を250ms間隔で監視し、変更されたときだけ画面を再描画します。
+
+```bash
+./mdv -watch README.md
+```
+
+監視中も `j` / `k` と矢印キーで1行、Space / `b` で1画面、`g` / `G` で先頭／末尾へ移動できます。`q` または `Ctrl+C` で終了します。ファイルが変更されても現在位置を可能な限り維持します。
+
+`-watch` はファイル指定時のみ利用でき、標準入力やリダイレクト出力とは併用できません。監視中は `less` を使用せず、Linuxのraw terminal制御を使用します。
 
 ## 対応しているMarkdown
 

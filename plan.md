@@ -28,6 +28,7 @@ cat README.md | md-viewer
 - `-ascii`: テーブルと区切り線をASCII文字で描画
 - `-no-pager`: ページャーを無効化
 - `-width N`: 表示幅を指定
+- `-watch`: ファイル変更時に自動で再描画
 
 表示幅と高さは、それぞれ `COLUMNS` と `LINES` を参照する。未設定時は幅80、高さ24を既定値とする。
 
