@@ -21,6 +21,24 @@ Go標準ライブラリだけで実装した、コンソール用Markdownビュ�
 
 `less` が見つからない場合は、組み込みの簡易ページャーへフォールバックします。
 
+## ビルド済みバイナリのダウンロード
+
+[GitHub Releases](../../releases) から、macOSとLinux向けのビルド済みバイナリをダウンロードできます。ビルド済みバイナリを使う場合、Goのインストールは不要です。
+
+| OS | アーキテクチャ | ファイル |
+|---|---|---|
+| macOS | Apple Silicon（ARM64） | `mdv-macos-arm64` |
+| Linux | x86_64 | `mdv-linux-x86_64` |
+
+ダウンロード後、実行権限を付与して利用します。
+
+```bash
+chmod +x mdv-macos-arm64
+./mdv-macos-arm64 README.md
+```
+
+Linuxの場合は、ファイル名を `mdv-linux-x86_64` に読み替えてください。各Releaseにはダウンロード内容を確認するための `checksums.txt` も添付されます。
+
 ## ビルド
 
 ```bash
