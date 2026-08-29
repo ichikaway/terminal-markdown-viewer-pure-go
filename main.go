@@ -16,6 +16,7 @@ import (
 	"md-viewer/internal/markdown"
 	"md-viewer/internal/pager"
 	"md-viewer/internal/render"
+	"md-viewer/internal/sanitize"
 	"md-viewer/internal/terminal"
 	"md-viewer/internal/watch"
 )
@@ -56,10 +57,9 @@ func main() {
 
 	data, err := readInput(flag.Args())
 	if err != nil {
-		fmt.Fprintln(os.Stderr, "md-viewer:", err)
-		os.Exit(1)
+		exitError(err.Error())
 	}
-	doc := markdown.Parse(string(data))
+	doc := markdown.Parse(sanitize.Document(string(data)))
 	lines := render.New(render.Options{Width: width, Color: color, ASCII: ascii}).Render(doc)
 
 	interactive := !noPager && isTerminal(os.Stdout)
@@ -140,10 +140,10 @@ func runWatch(path string, width int, color, ascii bool) error {
 		case err := <-watchDone:
 			return err
 		case err := <-errors:
-			status = "watch: " + err.Error()
+			status = "watch: " + sanitize.Line(err.Error())
 			redraw()
 		case data := <-updates:
-			lines = render.New(render.Options{Width: width, Color: color, ASCII: ascii}).Render(markdown.Parse(string(data)))
+			lines = render.New(render.Options{Width: width, Color: color, ASCII: ascii}).Render(markdown.Parse(sanitize.Document(string(data))))
 			status = watchStatus(path, color)
 			redraw()
 		case key := <-keys:
@@ -203,7 +203,7 @@ func readKeys(in *os.File, keys chan<- byte) {
 }
 
 func watchStatus(path string, color bool) string {
-	s := "watching " + path + " — j/k scroll, Space/b page, g/G ends, q quit"
+	s := "watching " + sanitize.Line(path) + " — j/k scroll, Space/b page, g/G ends, q quit"
 	if color {
 		return "\x1b[7m" + s + "\x1b[0m"
 	}
@@ -211,7 +211,7 @@ func watchStatus(path string, color bool) string {
 }
 
 func exitError(message string) {
-	fmt.Fprintln(os.Stderr, "md-viewer:", message)
+	fmt.Fprintln(os.Stderr, "md-viewer:", sanitize.Line(message))
 	os.Exit(1)
 }
 
